@@ -54,6 +54,7 @@ When sending requests to protected endpoints, include the `Authorization` header
 ```http
 Authorization: Bearer <your_jwt_token_here>
 
+```
 
 ## Docker Setup
 
