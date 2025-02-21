@@ -34,7 +34,7 @@ The API uses JWT (JSON Web Token) for authentication and authorization. Below is
 
 - **POST /api/auth/login**:
   - Used to authenticate the user and generate a JWT token.
-  - Requires `username` and `password` in the request body.
+  - Requires `username` and `password` in the request body.(Default values `admin` and `password`)
   - Returns a JWT token.
 
 - **GET /api/companies**:
