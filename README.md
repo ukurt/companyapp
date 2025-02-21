@@ -113,9 +113,6 @@ builder.Services.AddAuthentication(options =>
 - **Swagger Authentication**: Users can authorize via the **Authorize** button in Swagger by entering a valid JWT token.
 - **Secure Endpoints**: Protected API endpoints require authentication, which can be tested directly from Swagger UI.
 
-This section of the README will guide users to interact with your API using Swagger and authenticate using JWT tokens.
-
-
 ## Docker Setup
 
 This project comes with a pre-configured Dockerfile to containerize the application for easy deployment. The Dockerfile is set up to build and run the API in a Docker container. Below are the instructions to build and run the Docker container.
