@@ -56,6 +56,66 @@ Authorization: Bearer <your_jwt_token_here>
 
 ```
 
+## Swagger Integration with JWT Authentication
+
+This project includes **Swagger UI** for API documentation and testing, and it is protected with **JWT (JSON Web Token)** authentication. Below is a step-by-step guide on how to use and interact with the API through Swagger, including how to authenticate using JWT.
+
+### Setting Up Swagger
+
+Swagger is configured using the **Swashbuckle.AspNetCore** package to automatically generate API documentation and an interactive interface.
+
+1. **Accessing Swagger UI**
+
+   Once the application is running, Swagger UI is available at:
+
+```http
+http://localhost:8080/swagger
+```
+
+
+This will display the interactive Swagger UI where you can view all available API endpoints, input parameters, and responses.
+
+2. **OAuth Authentication**
+
+The API is secured using JWT authentication. To interact with protected endpoints, you must provide a valid JWT token.
+
+### JWT Authentication Setup
+
+1. **Authentication Middleware**
+
+The project uses JWT for authentication. The authentication middleware is configured as follows in the `Program.cs`:
+
+```csharp
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
+    };
+});
+```
+
+
+### Key Points:
+- **Swagger UI Access**: Swagger is available at `http://localhost:8080/swagger`.
+- **JWT Authentication**: The API uses JWT for authentication, which must be provided as a Bearer token.
+- **Swagger Authentication**: Users can authorize via the **Authorize** button in Swagger by entering a valid JWT token.
+- **Secure Endpoints**: Protected API endpoints require authentication, which can be tested directly from Swagger UI.
+
+This section of the README will guide users to interact with your API using Swagger and authenticate using JWT tokens.
+
+
 ## Docker Setup
 
 This project comes with a pre-configured Dockerfile to containerize the application for easy deployment. The Dockerfile is set up to build and run the API in a Docker container. Below are the instructions to build and run the Docker container.
