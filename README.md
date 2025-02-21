@@ -53,3 +53,46 @@ When sending requests to protected endpoints, include the `Authorization` header
 
 ```http
 Authorization: Bearer <your_jwt_token_here>
+
+
+## Docker Setup
+
+This project comes with a pre-configured Dockerfile to containerize the application for easy deployment. The Dockerfile is set up to build and run the API in a Docker container. Below are the instructions to build and run the Docker container.
+
+### Dockerfile Explanation
+
+The Dockerfile includes the following stages:
+
+1. **Base Image**:
+   - The base image used is `mcr.microsoft.com/dotnet/aspnet:8.0`, which is a lightweight image for running .NET applications.
+   - The application will be run under the `app` user, and it exposes ports `8080` and `8081` for the application.
+
+2. **Build Stage**:
+   - The SDK image `mcr.microsoft.com/dotnet/sdk:8.0` is used to build the application. This stage involves:
+     - Copying the necessary project files (`Company.Api.csproj`, `Company.Domain.csproj`, `Company.Infrastructure.csproj`) into the build context.
+     - Restoring NuGet dependencies using `dotnet restore`.
+     - Building the project using `dotnet build`.
+
+3. **Publish Stage**:
+   - The application is published to a folder using `dotnet publish`. This stage compiles the application into a self-contained deployment and prepares it to be run in the production environment.
+
+4. **Final Stage**:
+   - In the final stage, the published application is copied from the `publish` folder and placed into the `/app` directory.
+   - The entry point for the container is set to run the `Company.Api.dll` application.
+
+### Build and Run the Docker Container
+
+To build and run the Docker container, follow these steps:
+
+1. **Build the Docker Image**:
+   In the root of your project (where the Dockerfile is located), run the following command to build the Docker image:
+
+   ```bash
+   docker build -t company-api .
+
+1. **Run the Docker Container: Once the image is built, you can run it using the following command:**:
+
+   ```bash
+   docker run -d -p 8080:8080 -p 8081:8081 company-api
+
+
